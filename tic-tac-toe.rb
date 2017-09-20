@@ -9,7 +9,7 @@ class Board
 		@middle_row = Row.new
 		@bottom_row = Row.new
 		@board = "#{@top_row.row}\n#{@@horizontal_line}\n#{@middle_row.row}\n#{@@horizontal_line}\n#{@top_row.row}"
-		@spaces = {:top_left => self.top_row, :top_middle => self.top_row.middle, :top_right => self.top_row.right, 
+		@spaces = {:top_left => self.top_row.left, :top_middle => self.top_row.middle, :top_right => self.top_row.right, 
 			:middle_left => self.middle_row.left, :middle_middle => self.middle_row.middle, :middle_right => self.middle_row.right, 
 			:bottom_left => self.bottom_row.left, :bottom_middle => self.bottom_row.middle, :bottom_right =>  self.bottom_row.right}
 		puts @board
@@ -48,14 +48,6 @@ class Row
 	def generate_row
 		@row = "#{@left}#{@@vertical_line}#{@middle}#{@@vertical_line}#{@right}"
 	end
-
-	def generate_space(spot)
-		if spot == 'left'
-			self.left = 'X'
-			self.generate_row
-		end
-	end
-
 
 end
 
@@ -110,9 +102,10 @@ class TickTackToe
 		if turn == true
 			puts "Where would you like to put your X?"
 			placement = gets.chomp.to_sym
-			if true#blank_space?(placement)
-				spaces[placement].generate_space('left')
+			if blank_space?(placement)
+				@new_board.spaces[placement]
 				@new_board.generate_board
+				puts @new_board.spaces[placement]
 				puts @new_board.board
 			end
 		end
